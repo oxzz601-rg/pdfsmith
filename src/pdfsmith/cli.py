@@ -45,9 +45,10 @@ def cmd_delete(args):
 
 
 def cmd_split(args):
-    _report(ops.split_every(args.input, args.output_dir, every=args.every, password=args.password), args.json, skip=("files",))
+    result = ops.split_every(args.input, args.output_dir, every=args.every, password=args.password)
+    _report(result, args.json, skip=("files",))
     if not args.json:
-        for path in ops.split_every(args.input, args.output_dir, every=args.every, password=args.password)["files"]:
+        for path in result["files"]:
             print("  {}".format(path))
     return 0
 
@@ -82,12 +83,7 @@ def cmd_strip(args):
 
 
 def cmd_metadata(args):
-    fields = {
-        "title": args.title,
-        "author": args.author,
-        "subject": args.subject,
-        "keywords": args.keywords,
-    }
+    fields = {"title": args.title, "author": args.author, "subject": args.subject, "keywords": args.keywords}
     if not any(value is not None for value in fields.values()):
         print("pdfsmith: give at least one of --title/--author/--subject/--keywords", file=sys.stderr)
         return 2
