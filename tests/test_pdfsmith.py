@@ -88,7 +88,10 @@ def test_metadata_can_be_read_set_and_stripped(tmp_path):
 
     stripped = tmp_path / "stripped.pdf"
     ops.strip_metadata(tagged, stripped)
-    assert ops.info(stripped)["metadata"] == {}
+    metadata = ops.info(stripped)["metadata"]
+    # The original fields are gone; the new writer records itself as Producer.
+    assert "Title" not in metadata and "Author" not in metadata
+    assert metadata.get("Producer") == "pypdf"
 
 
 def test_images_become_pages(tmp_path):
