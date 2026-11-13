@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pdfsmith"
+version = "0.1.0"
+description = "Offline PDF toolbox: merge, split, extract, rotate, redact metadata and build PDFs from images"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+keywords = ["pdf", "merge", "split", "cli", "ocr", "documents"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Topic :: Utilities",
+]
+dependencies = ["pypdf>=3.9"]
+
+[project.optional-dependencies]
+images = ["Pillow>=9"]
+dev = ["pytest>=7", "Pillow>=9"]
+
+[project.scripts]
+pdfsmith = "pdfsmith.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
